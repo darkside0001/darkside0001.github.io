@@ -53,6 +53,9 @@ h2{font-size:13px;font-family:var(--mono);font-weight:500;color:var(--accent);te
 .thumb img{width:100%;aspect-ratio:1.414;object-fit:cover;object-position:top;border-radius:6px;border:1px solid var(--line);margin-bottom:12px;display:block;background:#fff}
 .card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{color:var(--accent)}
 .card.featured{border-color:var(--accent)}
+.card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{color:var(--accent)}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+.lead-note{color:var(--muted);margin:-8px 0 20px;max-width:680px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
 .chips li{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
 .skills .card h3{font-size:16px;margin-bottom:12px}
@@ -73,6 +76,7 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#tools">Tools</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Education</a></li>
@@ -104,6 +108,37 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <div class="timeline">
     <div class="item"><p class="when">2024 – now</p><div><h3>Freelance Security &amp; Backend Engineer</h3><p>Server security audits and hardening reports for small businesses. CRM systems for retail, fashion and fitness clients, deployed and secured on VPS. Wialon consulting for fleet owners.</p></div></div>
     <div class="item"><p class="when">Apr 2022 – Apr 2024</p><div><h3>Wialon Specialist &amp; IT Security Engineer</h3><p>Track Monitoring Service LLC, Uzbekistan. Practically the sole IT specialist: Wialon platform setup and maintenance, GPS tracker and fuel sensor troubleshooting, client accounts and training, and the company's IT infrastructure and security.</p></div></div>
+  </div>
+</div></section>
+
+<section id="tools"><div class="wrap">
+  <h2>Open-source security tools</h2>
+  <p class="lead-note">Small defensive tools I wrote and use in my own audits. Each has tests, CI and sample reports. Code on GitHub.</p>
+  <div class="grid two">
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/linux-hardening-audit">linux-hardening-audit</a></h3>
+      <p class="kind">Bash · Hardening</p>
+      <p>Read-only Linux baseline audit inspired by CIS: SSH, accounts, sudo, file permissions, kernel network settings, firewall, fail2ban, auditd, updates. Scores the host and prints the fix for every finding.</p>
+      <ul class="chips"><li>Bash</li><li>CIS</li><li>JSON / Markdown</li><li>41 tests</li></ul>
+    </article>
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/ssh-bruteforce-detector">ssh-bruteforce-detector</a></h3>
+      <p class="kind">Python · Detection</p>
+      <p>Finds SSH brute force, password spraying, distributed attacks and a successful login after failures in auth.log or journald. Alerts mapped to MITRE ATT&amp;CK, blocklist export for ipset.</p>
+      <ul class="chips"><li>Python</li><li>MITRE ATT&amp;CK</li><li>Log analysis</li><li>SOC</li></ul>
+    </article>
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/web-sec-check">web-sec-check</a></h3>
+      <p class="kind">Python · Web security</p>
+      <p>Grades a site's HTTPS setup from A+ to F: TLS versions, cipher, certificate, HSTS, CSP and other headers, cookie flags, HTTP redirect. Works as a CI gate.</p>
+      <ul class="chips"><li>Python</li><li>TLS</li><li>HTTP headers</li><li>CI</li></ul>
+    </article>
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/nmap-report">nmap-report</a></h3>
+      <p class="kind">Python · Attack surface</p>
+      <p>Turns nmap XML into HTML / Markdown reports, flags risky exposed services (databases, Docker API, RDP, Hikvision / Dahua DVRs) and diffs two scans to show what changed.</p>
+      <ul class="chips"><li>Python</li><li>nmap</li><li>Reporting</li><li>CCTV / IoT</li></ul>
+    </article>
   </div>
 </div></section>
 
