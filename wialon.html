@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wialon fleet telematics · Razim Kudaybergenov</title>
+<meta name="description" content="Case study: two years supporting a regional Wialon telematics service: about 1,700 tracked vehicles, Teltonika tracker provisioning, fuel sensor calibration and field operations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --text:#0f1419; --muted:#5b6672; --line:#e3e7ec;
+  --accent:#0a8f5a; --accent-soft:#e3f5ec; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0f14; --surface:#121820; --text:#e6edf3; --muted:#8b98a5; --line:#1f2a36;
+    --accent:#3ddc97; --accent-soft:#12291f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0f14; --surface:#121820; --text:#e6edf3; --muted:#8b98a5; --line:#1f2a36;
+  --accent:#3ddc97; --accent-soft:#12291f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.logo{font-family:var(--mono);font-weight:500;text-decoration:none}
+.logo span{color:var(--accent)}
+nav ul{display:flex;gap:20px;list-style:none;font-size:14px}
+nav ul a{text-decoration:none;color:var(--muted)}
+nav ul a:hover{color:var(--text)}
+@media (max-width:640px){nav ul{display:none}}
+header{padding:88px 0 64px}
+.tag{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:16px}
+h1{font-size:clamp(34px,6vw,54px);line-height:1.1;letter-spacing:-.02em;margin-bottom:20px}
+.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:640px;margin-bottom:32px}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-block;padding:11px 18px;border-radius:8px;font-weight:500;font-size:15px;text-decoration:none;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#04140c}
+section{padding:56px 0;border-top:1px solid var(--line)}
+h2{font-size:13px;font-family:var(--mono);font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:24px}
+.about p{max-width:680px;margin-bottom:14px;font-size:17px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.card h3{font-size:18px;margin-bottom:6px}
+.card .kind{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:12px}
+.card p{color:var(--muted);font-size:15px;margin-bottom:14px}
+.thumb img{width:100%;aspect-ratio:1.414;object-fit:cover;object-position:top;border-radius:6px;border:1px solid var(--line);margin-bottom:12px;display:block;background:#fff}
+.card.featured{border-color:var(--accent)}
+.card h3 a{color:inherit;text-decoration:none}.card h3 a:hover{color:var(--accent)}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr))}
+.lead-note{color:var(--muted);margin:-8px 0 20px;max-width:680px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
+.chips li{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
+.skills .card h3{font-size:16px;margin-bottom:12px}
+.timeline{display:grid;gap:16px}
+.item{display:grid;grid-template-columns:140px 1fr;gap:16px}
+.item .when{font-family:var(--mono);font-size:13px;color:var(--muted);padding-top:3px}
+.item h3{font-size:17px}
+.item p{color:var(--muted);font-size:15px}
+@media (max-width:560px){.item{grid-template-columns:1fr;gap:4px}}
+.contact ul{list-style:none;display:grid;gap:10px;font-size:17px}
+.contact li span{font-family:var(--mono);font-size:13px;color:var(--muted);display:inline-block;width:96px}
+footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-size:13px;font-family:var(--mono)}
+
+.crumb{font-family:var(--mono);font-size:13px;color:var(--muted);text-decoration:none}
+.crumb:hover{color:var(--accent)}
+header.case{padding:64px 0 40px}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.stat b{display:block;font-size:30px;letter-spacing:-.02em;line-height:1.1;color:var(--text)}
+.stat span{font-size:14px;color:var(--muted)}
+.prose{max-width:680px}
+.prose p{margin-bottom:14px;font-size:17px}
+.card ul.pts{color:var(--muted);font-size:15px;padding-left:18px;margin-bottom:14px}
+.card ul.pts li{margin-bottom:6px}
+.figure{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.figure svg{width:100%;height:auto;display:block;font:12px var(--mono);fill:var(--muted)}
+.figure .gl{stroke:var(--line);stroke-width:1}
+.figure .l1,.figure .l2{fill:none;stroke-width:2}
+.figure .l1{stroke:var(--accent)} .figure .d1{fill:var(--accent)}
+.figure .l2{stroke:#2f6fde} .figure .d2{fill:#2f6fde}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .figure .l2{stroke:#6ea8ff}:root:not([data-theme="light"]) .figure .d2{fill:#6ea8ff}}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:4px 0 12px}
+.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.figcap{font-size:14px;color:var(--muted);margin-top:12px;max-width:680px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.tbl th,.tbl td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl th{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.tbl tr:last-child td{border-bottom:0}
+.tbl td:first-child{font-family:var(--mono);white-space:nowrap}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="index.html"><span>$</span> razim</a>
+  <ul>
+    <li><a href="#scope">Scope</a></li>
+    <li><a href="#work">What I did</a></li>
+    <li><a href="#fuel">Fuel calibration</a></li>
+    <li><a href="#security">Security</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</div></nav>
+
+<header class="case" id="top"><div class="wrap">
+  <a class="crumb" href="index.html#projects">&larr; back to portfolio</a>
+  <p class="tag" style="margin-top:28px">Case study · Telematics · Apr 2022 – Apr 2024</p>
+  <h1>Supporting a Wialon telematics service for 1,700 vehicles</h1>
+  <p class="lead">At Track Monitoring Service, a regional Wialon partner in Uzbekistan, I was part of the small team that kept the platform working: trackers, fuel sensors, unit setup, client accounts and the paperwork behind every installation.</p>
+</div></header>
+
+<section id="scope"><div class="wrap">
+  <h2>Scope</h2>
+  <div class="stats">
+    <div class="stat"><b>~1,700</b><span>vehicles and machines on the Wialon Hosting platform I supported</span></div>
+    <div class="stat"><b>250+</b><span>client accounts across two Wialon servers</span></div>
+    <div class="stat"><b>~160</b><span>fuel tank calibrations by our team, many of which I worked on</span></div>
+    <div class="stat"><b>139</b><span>tracker configuration templates in our shared library</span></div>
+  </div>
+  <div class="prose" style="margin-top:28px">
+    <p>Clients were construction companies, road maintenance units, utilities, municipal services, farms and private hauliers. The fleet was mostly heavy equipment: dump trucks, excavators, wheel loaders, cranes, concrete mixers, graders, tractors and combine harvesters. For most of these clients fuel was the reason to buy tracking, so fuel accuracy was the job.</p>
+    <p>Hardware was Teltonika: about two thirds FMB920, then FMB125 for vehicles with fuel sensors, plus an older FM1120 / FM1125 / FM5300 base still in service.</p>
+  </div>
+</div></section>
+
+<section id="work"><div class="wrap">
+  <h2>What I did</h2>
+  <div class="grid two">
+    <article class="card featured">
+      <h3>Tracker provisioning at scale</h3>
+      <p class="kind">Teltonika · Configuration</p>
+      <ul class="pts">
+        <li>Worked with and extended a shared library of 139 ready configs, one per combination of tracker model, mobile operator (four APNs), number of fuel sensors (0–4), RS-232 or RS-485 and roaming.</li>
+        <li>A new install meant picking the right template instead of configuring from scratch, which cut setup time and mistakes.</li>
+        <li>Firmware updates across the FMB1xx / FMB920 range.</li>
+      </ul>
+      <ul class="chips"><li>FMB920</li><li>FMB125</li><li>FM11xx / FM5300</li><li>Teltonika Configurator</li></ul>
+    </article>
+    <article class="card featured">
+      <h3>Fuel level monitoring</h3>
+      <p class="kind">LLS sensors · Calibration</p>
+      <ul class="pts">
+        <li>Capacitive fuel level sensors (Escort TD-150, Omnicomm) on RS-485, one to four per vehicle depending on the number and shape of tanks.</li>
+        <li>Calibrated each tank by filling it in measured steps and recording the raw sensor value, then loaded the table into the Wialon fuel sensor.</li>
+        <li>Tuned fill and theft detection (minimum volume, join interval, stop timeout) so reports showed real drains, not sloshing.</li>
+      </ul>
+      <ul class="chips"><li>Escort TD-150</li><li>Omnicomm LLS</li><li>RS-485</li><li>Fuel reports</li></ul>
+    </article>
+    <article class="card">
+      <h3>Wialon unit and account setup</h3>
+      <p class="kind">Wialon Hosting · Administration</p>
+      <ul class="pts">
+        <li>Unit profile templates (.wlp) with sensors, trip detection, fuel consumption rules and report settings, reused across similar machines.</li>
+        <li>Client accounts, users, rights, unit groups and custom fields recording install date, tracker serial, seals and installer for every unit.</li>
+        <li>Sensor presets for BLE accessories: temperature, door, angle and Technoton flow meters.</li>
+      </ul>
+      <ul class="chips"><li>Wialon Hosting</li><li>Unit properties</li><li>Access rights</li><li>BLE sensors</li></ul>
+    </article>
+    <article class="card">
+      <h3>Field operations &amp; documentation</h3>
+      <p class="kind">Installation · Support</p>
+      <ul class="pts">
+        <li>Installation, inspection and reinstallation acts with tracker and sensor seal numbers, so tampering could be proven later.</li>
+        <li>Serial / IMEI registers for each equipment shipment and warranty batches for the service centre.</li>
+        <li>SIM card fleet across Ucell, Uzmobile, Beeline and UMS, including roaming packages for long-haul trucks.</li>
+      </ul>
+      <ul class="chips"><li>Install acts</li><li>Seals</li><li>RMA</li><li>SIM / APN</li></ul>
+    </article>
+    <article class="card">
+      <h3>Service request form</h3>
+      <p class="kind">Web · Telegram</p>
+      <p>A small web form for clients to request a new installation, an inspection or a reconnection, choosing the number of vehicles and tracker model. Requests went straight to the team in Telegram instead of being lost in phone calls.</p>
+      <ul class="chips"><li>HTML / JS</li><li>Telegram Bot API</li></ul>
+    </article>
+    <article class="card">
+      <h3>Platform hygiene</h3>
+      <p class="kind">Housekeeping</p>
+      <p>Regular reviews of units that had stopped reporting, some silent for 150 to 365 days, to decide between a repair visit and removal, so clients paid only for working trackers and the server stayed clean.</p>
+      <ul class="chips"><li>Monitoring</li><li>Billing accuracy</li></ul>
+    </article>
+  </div>
+</div></section>
+
+<section id="fuel"><div class="wrap">
+  <h2>Example: calibrating a two-sensor tank</h2>
+  <p class="lead-note">Real data from one of our calibrations: a wheeled excavator with a 440 L tank and two sensors, filled in 20 L steps. Two sensors cover the tank tilt when the machine stands on a slope; Wialon averages them.</p>
+  <div class="figure">
+    <div class="legend"><span><i style="background:var(--accent)"></i>Sensor 1</span><span><i style="background:#2f6fde"></i>Sensor 2</span></div>
+    <svg viewBox="0 0 640 300" role="img" aria-label="Calibration curves of two fuel level sensors in one 440 litre tank: litres against raw sensor value, both close to linear">
+<line x1="52" x2="624" y1="260.0" y2="260.0" class="gl"/><text x="44" y="264.0" text-anchor="end">0</text><line x1="52" x2="624" y1="205.8" y2="205.8" class="gl"/><text x="44" y="209.8" text-anchor="end">100</text><line x1="52" x2="624" y1="151.6" y2="151.6" class="gl"/><text x="44" y="155.6" text-anchor="end">200</text><line x1="52" x2="624" y1="97.3" y2="97.3" class="gl"/><text x="44" y="101.3" text-anchor="end">300</text><line x1="52" x2="624" y1="43.1" y2="43.1" class="gl"/><text x="44" y="47.1" text-anchor="end">400</text><text x="52.0" y="278" text-anchor="middle">0</text><text x="195.0" y="278" text-anchor="middle">1024</text><text x="338.0" y="278" text-anchor="middle">2048</text><text x="481.0" y="278" text-anchor="middle">3072</text><text x="624.0" y="278" text-anchor="middle">4096</text>
+<text x="338.0" y="296" text-anchor="middle">raw sensor value (0–4095)</text>
+<text transform="translate(12,138.0) rotate(-90)" text-anchor="middle">litres</text>
+<path d="M52.0,260.0 L83.4,249.0 L111.9,238.2 L138.7,227.3 L163.9,216.5 L189.1,205.7 L213.4,194.7 L238.4,183.9 L263.4,173.1 L288.7,162.1 L313.3,151.4 L336.9,140.5 L361.3,129.8 L386.0,118.9 L410.9,108.1 L435.3,97.2 L458.9,86.4 L483.7,75.5 L508.2,64.7 L533.2,53.8 L557.4,43.1 L583.4,32.1 L609.1,21.6" class="l1"/><path d="M52.0,260.0 L72.2,249.0 L98.9,238.2 L124.9,227.3 L149.8,216.5 L174.2,205.7 L198.5,194.7 L221.7,183.9 L246.0,173.1 L270.5,162.1 L294.3,151.4 L318.6,140.5 L341.4,129.8 L365.5,118.9 L389.1,108.1 L413.1,97.2 L436.9,86.4 L460.1,75.5 L483.7,64.7 L507.4,53.8 L530.7,43.1 L555.9,32.1 L580.4,21.6" class="l2"/><circle cx="83.4" cy="249.0" r="2.6" class="d1"/><circle cx="72.2" cy="249.0" r="2.6" class="d2"/><circle cx="111.9" cy="238.2" r="2.6" class="d1"/><circle cx="98.9" cy="238.2" r="2.6" class="d2"/><circle cx="138.7" cy="227.3" r="2.6" class="d1"/><circle cx="124.9" cy="227.3" r="2.6" class="d2"/><circle cx="163.9" cy="216.5" r="2.6" class="d1"/><circle cx="149.8" cy="216.5" r="2.6" class="d2"/><circle cx="189.1" cy="205.7" r="2.6" class="d1"/><circle cx="174.2" cy="205.7" r="2.6" class="d2"/><circle cx="213.4" cy="194.7" r="2.6" class="d1"/><circle cx="198.5" cy="194.7" r="2.6" class="d2"/><circle cx="238.4" cy="183.9" r="2.6" class="d1"/><circle cx="221.7" cy="183.9" r="2.6" class="d2"/><circle cx="263.4" cy="173.1" r="2.6" class="d1"/><circle cx="246.0" cy="173.1" r="2.6" class="d2"/><circle cx="288.7" cy="162.1" r="2.6" class="d1"/><circle cx="270.5" cy="162.1" r="2.6" class="d2"/><circle cx="313.3" cy="151.4" r="2.6" class="d1"/><circle cx="294.3" cy="151.4" r="2.6" class="d2"/><circle cx="336.9" cy="140.5" r="2.6" class="d1"/><circle cx="318.6" cy="140.5" r="2.6" class="d2"/><circle cx="361.3" cy="129.8" r="2.6" class="d1"/><circle cx="341.4" cy="129.8" r="2.6" class="d2"/><circle cx="386.0" cy="118.9" r="2.6" class="d1"/><circle cx="365.5" cy="118.9" r="2.6" class="d2"/><circle cx="410.9" cy="108.1" r="2.6" class="d1"/><circle cx="389.1" cy="108.1" r="2.6" class="d2"/><circle cx="435.3" cy="97.2" r="2.6" class="d1"/><circle cx="413.1" cy="97.2" r="2.6" class="d2"/><circle cx="458.9" cy="86.4" r="2.6" class="d1"/><circle cx="436.9" cy="86.4" r="2.6" class="d2"/><circle cx="483.7" cy="75.5" r="2.6" class="d1"/><circle cx="460.1" cy="75.5" r="2.6" class="d2"/><circle cx="508.2" cy="64.7" r="2.6" class="d1"/><circle cx="483.7" cy="64.7" r="2.6" class="d2"/><circle cx="533.2" cy="53.8" r="2.6" class="d1"/><circle cx="507.4" cy="53.8" r="2.6" class="d2"/><circle cx="557.4" cy="43.1" r="2.6" class="d1"/><circle cx="530.7" cy="43.1" r="2.6" class="d2"/><circle cx="583.4" cy="32.1" r="2.6" class="d1"/><circle cx="555.9" cy="32.1" r="2.6" class="d2"/><circle cx="609.1" cy="21.6" r="2.6" class="d1"/><circle cx="580.4" cy="21.6" r="2.6" class="d2"/>
+</svg>
+  </div>
+  <p class="figcap">22 points per sensor. The curves are almost straight because the tank is a rectangular box; on cylindrical or shaped tanks the same method gives a clearly curved table, which is why each tank was calibrated rather than calculated.</p>
+</div></section>
+
+<section id="security"><div class="wrap">
+  <h2>Why it matters for security work</h2>
+  <div class="prose">
+    <p>A telematics platform is an IoT system with a lot of attack surface: hundreds of SIM-connected devices talking to a public server, client logins, and data that companies treat as sensitive (where their machines are and how much fuel they burn). Running it taught me to keep an inventory of every device, control who can see which units, notice devices that go quiet, and document every change.</p>
+    <p>That is the same discipline I now apply in server audits and in my <a href="index.html#tools">security tools</a>.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Credentials</h2>
+  <div class="grid">
+    <article class="card"><h3>Certified Wialon Specialist, Level 4</h3><p class="kind">Gurtam · No. W4-32773 · valid to Nov 2028</p><p><a href="certs/Wialon_W4-32773.jpg">View certificate</a></p></article>
+    <article class="card"><h3>Available for Wialon projects</h3><p class="kind">Remote · Freelance</p><p>Tracker and sensor setup, fuel calibration, reports and account structure for fleet owners and Wialon partners. <a href="index.html#contact">Get in touch</a>.</p></article>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Client names, vehicle numbers, device IDs and locations are left out of this page on purpose.</div></footer>
+</body>
+</html>
