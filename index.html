@@ -29,12 +29,12 @@ a{color:inherit}
 .wrap{max-width:960px;margin:0 auto;padding:0 16px}
 nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
-.logo{font-family:var(--mono);font-weight:500;text-decoration:none}
+.logo{font-family:var(--mono);font-weight:500;text-decoration:none;white-space:nowrap}
 .logo span{color:var(--accent)}
 nav ul{display:flex;gap:20px;list-style:none;font-size:14px}
 nav ul a{text-decoration:none;color:var(--muted)}
 nav ul a:hover{color:var(--text)}
-@media (max-width:640px){nav ul{display:none}}
+@media (max-width:760px){nav ul{display:none}}
 header{padding:88px 0 64px}
 .tag{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:16px}
 h1{font-size:clamp(34px,6vw,54px);line-height:1.1;letter-spacing:-.02em;margin-bottom:20px}
@@ -76,6 +76,7 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
+    <li><a href="#engineering">Labs</a></li>
     <li><a href="#tools">Tools</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -111,6 +112,25 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
   </div>
 </div></section>
 
+<section id="engineering"><div class="wrap">
+  <h2>Security engineering projects</h2>
+  <p class="lead-note">End-to-end work in my own lab: build it, attack it, fix it, prove the fix. Each one runs in Docker and is checked in CI.</p>
+  <div class="grid two">
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/infra-security-monitoring">infra-security-monitoring</a></h3>
+      <p class="kind">Infrastructure security · Monitoring</p>
+      <p>A hardened web stack the way I would run it for a client. Caddy with TLS and security headers sits in front of an API and PostgreSQL. The stack runs on segmented Docker networks behind an nftables firewall. Prometheus and Alertmanager cover uptime, certificates and backups. Loki raises log-based alerts for brute force and scanning, mapped to MITRE ATT&amp;CK. Encrypted restic backups are restored automatically to test them, and a disaster-recovery drill measured an RTO of about 30 seconds. A STRIDE threat model, ADRs and a runbook are included. 41 end-to-end checks run in CI.</p>
+      <ul class="chips"><li>Caddy</li><li>nftables</li><li>Prometheus</li><li>Loki</li><li>Grafana</li><li>restic</li><li>Docker</li></ul>
+    </article>
+    <article class="card featured">
+      <h3><a href="https://github.com/darkside0001/crm-demo/blob/main/docs/pentest-report.md">CRM API penetration test</a></h3>
+      <p class="kind">Pentest · OWASP API Top 10</p>
+      <p>I attacked my own <a href="https://github.com/darkside0001/crm-demo">CRM API</a> with an authenticated test harness and found 8 issues (CVSS up to 6.8). They included customer data leaking through ids and search, account lockout as a denial of service, a lockout race, and a token that still worked after logout. I fixed all 8, re-ran the same attacks with 0 left, and added a regression test for each finding. The full report includes evidence and residual risk.</p>
+      <ul class="chips"><li>OWASP API Top 10</li><li>CVSS</li><li>FastAPI</li><li>PostgreSQL</li><li>Report</li></ul>
+    </article>
+  </div>
+</div></section>
+
 <section id="tools"><div class="wrap">
   <h2>Open-source security tools</h2>
   <p class="lead-note">Small defensive tools I wrote and use in my own audits. Each has tests, CI and sample reports. Code on GitHub.</p>
@@ -124,8 +144,8 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
     <article class="card featured">
       <h3><a href="https://github.com/darkside0001/linux-hardening-audit">linux-hardening-audit</a></h3>
       <p class="kind">Bash · Hardening</p>
-      <p>Read-only Linux baseline audit inspired by CIS: SSH, accounts, sudo, file permissions, kernel network settings, firewall, fail2ban, auditd, updates. Scores the host and prints the fix for every finding.</p>
-      <ul class="chips"><li>Bash</li><li>CIS</li><li>JSON / Markdown</li><li>41 tests</li></ul>
+      <p>Linux baseline audit inspired by CIS: SSH, accounts, sudo, file permissions, kernel network settings, firewall, fail2ban, auditd, updates. A separate harden.sh fixes the findings safely, with a dry run, backups and rollback. In a reproducible lab it took an insecure Ubuntu VPS from 44/100 to 98/100. <a href="https://github.com/darkside0001/linux-hardening-audit/blob/main/docs/before-after-report.md">Before/after report</a></p>
+      <ul class="chips"><li>Bash</li><li>CIS</li><li>Hardening</li><li>Before / after</li></ul>
     </article>
     <article class="card featured">
       <h3><a href="https://github.com/darkside0001/ssh-bruteforce-detector">ssh-bruteforce-detector</a></h3>
@@ -188,8 +208,8 @@ footer{padding:32px 0;border-top:1px solid var(--line);color:var(--muted);font-s
 <section id="skills" class="skills"><div class="wrap">
   <h2>Skills</h2>
   <div class="grid">
-    <div class="card"><h3>Security</h3><ul class="chips"><li>Vulnerability assessment</li><li>Server hardening</li><li>Network scanning</li><li>Security reporting</li><li>SOC fundamentals</li></ul></div>
-    <div class="card"><h3>Infrastructure</h3><ul class="chips"><li>Linux</li><li>VPS deployment</li><li>Reverse proxy</li><li>TLS</li><li>Networking</li></ul></div>
+    <div class="card"><h3>Security</h3><ul class="chips"><li>API pentesting</li><li>Vulnerability assessment</li><li>Server hardening</li><li>Network scanning</li><li>Security reporting</li><li>SOC fundamentals</li></ul></div>
+    <div class="card"><h3>Infrastructure</h3><ul class="chips"><li>Linux</li><li>VPS deployment</li><li>Reverse proxy</li><li>TLS</li><li>Firewalls</li><li>Monitoring &amp; alerting</li><li>Backups &amp; DR</li><li>Docker</li><li>Networking</li></ul></div>
     <div class="card"><h3>Development</h3><ul class="chips"><li>REST APIs</li><li>SQL databases</li><li>Telegram bots</li><li>Git</li></ul></div>
   </div>
 </div></section>
